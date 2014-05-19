@@ -110,13 +110,13 @@
 				<a id="yellow-magazine" class="button inactive" title="Yellow Magazine">
 					<span class="icon icon_yellow-magazine"></span>
 				</a>
-				<hr>
-				<p id="song-header">Now Playing: <span id="song-title"></span></p>
+				<div id="song-title-wrapper">
+					<p id="song-header" style="display: none;">Now Playing: <span id="song-title"></span></p>
+				</div>
 				<audio controls id="audioplayer">
 					Your browser does not support the <code>audio</code> element. Get a new browser please.
-					<source src="audio/Shutterwax-Apocalypse_Please_Be_True.m4a" type="audio/mp4">
-					<source src="audio/Shutterwax-Apocalypse_Please_Be_True.mp3" type="audio/mpeg">
-					<source src="audio/Shutterwax-Apocalypse_Please_Be_True.ogg" type="audio/ogg">
+					<!-- <source src="audio/Shutterwax-Apocalypse_Please_Be_True.mp3" type="audio/mpeg">
+					<source src="audio/Shutterwax-Apocalypse_Please_Be_True.ogg" type="audio/ogg"> -->
 				</audio>
 			</section>
 
@@ -124,7 +124,7 @@
 		
 		<aside>
 			<h2>Frames</h2>
-			<iframe id="promo-video" src="//www.youtube.com/embed/nd14YRGvaEc" frameborder="0" allowfullscreen></iframe>
+			<!-- <iframe id="promo-video" src="//www.youtube.com/embed/nd14YRGvaEc" frameborder="0" allowfullscreen></iframe> -->
 		</aside>
 
 		<aside>
@@ -156,7 +156,6 @@
 		$.fn.startup();
 	});
 </script>
-<script src="assets/js/script.js"></script>
 	
  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
