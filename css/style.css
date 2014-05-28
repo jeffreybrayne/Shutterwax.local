@@ -535,3 +535,18 @@ footer a {
 .noDisplay {
 	display: none;
 }
+
+/* Modals */
+
+.ui-widget-overlay {
+	z-index: 9998;
+}
+
+.ui-dialog {
+	z-index: 9999;
+	background-color: rgba(30, 30, 30, .5);
+}
+
+.ui-widget, .ui-widget-content {
+	background-color: transparent;
+}

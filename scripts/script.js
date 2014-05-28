@@ -1,30 +1,43 @@
 var maps = {};
-maps.songs = 
-	{
-		"apocalypse": {
-			"file": "Shutterwax-Apocalypse_Please_Be_True",
-			"title": "Apocalypse, Please Be True"
-		}
-	},
-	{
-		"mask": {
-			"file": "Shutterwax-Mask",
-			"title": "Mask"
-		}
-	};
+maps.songs = {
+	"apocalypse": {
+		"file": "Shutterwax-Apocalypse_Please_Be_True",
+		"title": "Apocalypse, Please Be True"
+
+	},	
+	"mask": {
+		"file": "Shutterwax-Mask",
+		"title": "Mask"
+		
+	}, 	
+	"dig-me-a-well": {
+		"file": "Shutterwax-Dig_Me_a_Well",
+		"title": "Dig Me a Well"
+	}
+};
+
+
 (function($){
 	
 	
 	$.fn.startup = function(){
+
 		$(".button").each(function(){
 			$(this).click($.fn.playAudio);
 		});
+
 	};
 	
 	$.fn.playAudio = function(e){
+
+		console.log("e:::", e.target.parentNode.id);
 		var audioplayer = document.getElementById("audioplayer");
 		var file = maps.songs[e.target.parentNode.id].file;
 		var title = maps.songs[e.target.parentNode.id].title;
+		
+
+		console.log("file:::", file);
+
 		if(!!file){
 			var ogg = "audio/" + file + ".ogg";
 			var mp3 = "audio/" + file + ".mp3";
@@ -36,23 +49,48 @@ maps.songs =
 			    source.src = mp3;
 			} else if (!!audioplayer.canPlayType('audio/mp4') || audioplayer.canPlayType('audio/mp4') === "maybe") {
 				source.type = 'audio/mp4';
-			    source.src = m4a;
+				source.src = m4a;
 			}else {
 			    source.type= 'audio/ogg';
 			    source.src = ogg;
 			} 
-			audioplayer.appendChild(source);
-			if (audioplayer.paused) {
+
+			var playerSource = !!audioplayer.firstChild && !!audioplayer.firstChild.src ? audioplayer.firstChild.src.substring(audioplayer.firstChild.src.lastIndexOf('/')) : "";
+			var isPreviousSource = playerSource === source.src.substring(source.src.lastIndexOf('/'));
+
+			if (audioplayer.paused && !isPreviousSource) {
+				console.log("1")
 				document.getElementById("song-title").innerHTML = title;
-				$("#song-header").toggle();
-				// audioplayer.appendChild(source);
-				audioplayer.load(source);
+
+				// clear out source from audioplayer
+				while (audioplayer.firstChild) {
+				    audioplayer.removeChild(audioplayer.firstChild);
+				}
+				
+				audioplayer.appendChild(source);
+				audioplayer.load();		
 				audioplayer.play();
-		    }   
-		    else {
-		    	$("#song-header").toggle();
-				document.getElementById("song-title").innerHTML = "";		       	
+		   
+		    } 
+		    else if (audioplayer.paused && isPreviousSource) {
+		    	console.log("2")
+				audioplayer.play();		   
+		    } 
+		    else if(!audioplayer.paused && isPreviousSource){
+		    	console.log("3")
 				audioplayer.pause();
+		    } 
+		    else if(!audioplayer.paused && !isPreviousSource) {
+		    	console.log("4")
+		    	document.getElementById("song-title").innerHTML = title;
+		    	// clear out source from audioplayer
+				while (audioplayer.firstChild) {
+				    audioplayer.removeChild(audioplayer.firstChild);
+				}
+				
+		    	audioplayer.appendChild(source);
+				audioplayer.load();
+				audioplayer.play();
 		    }
 		    $(this).toggleClass('pause');
 	    }
@@ -86,9 +124,9 @@ function parallaxHeader() {
 
 // innitiate parallax for header
 jQuery(window).scroll(function() {	      
-/* 	if(!$.browser.mobile){ */
+ 	if(!$.browser.mobile){ 
 		parallaxHeader();	
-/* 	}       */
+ 	}       
 });
 
 /**
