@@ -30,14 +30,10 @@ maps.songs = {
 	
 	$.fn.playAudio = function(e){
 
-		console.log("e:::", e.target.parentNode.id);
 		var audioplayer = document.getElementById("audioplayer");
 		var file = maps.songs[e.target.parentNode.id].file;
 		var title = maps.songs[e.target.parentNode.id].title;
 		
-
-		console.log("file:::", file);
-
 		if(!!file){
 			var ogg = "audio/" + file + ".ogg";
 			var mp3 = "audio/" + file + ".mp3";
@@ -60,7 +56,9 @@ maps.songs = {
 
 			if (audioplayer.paused && !isPreviousSource) {
 				console.log("1")
-				document.getElementById("song-title").innerHTML = title;
+				if(title !== document.getElementById("song-title").innerHTML){
+			    	document.getElementById("song-title").innerHTML = title;
+			    }
 
 				// clear out source from audioplayer
 				while (audioplayer.firstChild) {
@@ -82,7 +80,9 @@ maps.songs = {
 		    } 
 		    else if(!audioplayer.paused && !isPreviousSource) {
 		    	console.log("4")
-		    	document.getElementById("song-title").innerHTML = title;
+		    	if(title !== document.getElementById("song-title").innerHTML){
+			    	document.getElementById("song-title").innerHTML = title;
+			    }
 		    	// clear out source from audioplayer
 				while (audioplayer.firstChild) {
 				    audioplayer.removeChild(audioplayer.firstChild);
