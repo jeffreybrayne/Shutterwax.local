@@ -86,9 +86,9 @@ function parallaxHeader() {
 
 // innitiate parallax for header
 jQuery(window).scroll(function() {	      
-/* 	if(!$.browser.mobile){ */
+ 	if(!$.browser.mobile){ 
 		parallaxHeader();	
-/* 	}       */
+ 	}
 });
 
 /**
