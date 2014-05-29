@@ -6,9 +6,7 @@
 		"username": "shutterwax@jeffreybrayne.com",
 		"password": "CAmeron0903!!",
 		"path": "/",
-
 		"upload_on_save": false, 
-
 		"port": 21,
 		"tls": false,
 		"timeout": 30,
@@ -17,8 +15,10 @@
 		"download_on_open": false,
 		"overwrite_newer_prevention": true,
 		"default_folder_permissions": "755",
-		"default_upload_permissions": null
-		
+		"always_sync_local_permissions": false,
+
+		"encoding": "auto"
+
 	}
 
 }
