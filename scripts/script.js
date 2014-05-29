@@ -26,6 +26,10 @@ maps.songs = {
 			$(this).click($.fn.playAudio);
 		});
 
+		if($.browser.mobile){ 
+			$("#desktop-nav").addClass("noDisplay");
+		}
+
 	};
 	
 	$.fn.playAudio = function(e){
