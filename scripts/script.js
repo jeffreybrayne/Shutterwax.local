@@ -26,10 +26,19 @@ maps.songs = {
 			$(this).click($.fn.playAudio);
 		});
 
+		$(".link a").each(function(){
+			$(this).click($.fn.setHotLink);
+		});
+
 		if($.browser.mobile){ 
 			$("#desktop-nav").addClass("noDisplay");
 		}
 
+	};
+
+	$.fn.setHotLink = function(){
+		$(".link a").removeClass("hot");
+		$(this).addClass("hot");
 	};
 	
 	$.fn.playAudio = function(e){
