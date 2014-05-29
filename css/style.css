@@ -352,6 +352,7 @@ main.banner ul li::before {
 
 aside#audio audio {
 	width: 100%;
+margin-top: 2em;
 }
 
 main aside#audio section p#song-header{
