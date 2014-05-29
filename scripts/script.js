@@ -29,71 +29,75 @@ maps.songs = {
 	};
 	
 	$.fn.playAudio = function(e){
-
-		var audioplayer = document.getElementById("audioplayer");
-		var file = maps.songs[e.target.parentNode.id].file;
-		var title = maps.songs[e.target.parentNode.id].title;
-		
-		if(!!file){
-			var ogg = "audio/" + file + ".ogg";
-			var mp3 = "audio/" + file + ".mp3";
-			var m4a = "audio/" + file + ".m4a";
+		if(!$(this).hasClass("inactive")){
+			var audioplayer = document.getElementById("audioplayer");
+			var file = maps.songs[e.target.parentNode.id].file;
 			var title = maps.songs[e.target.parentNode.id].title;
-			var source= document.createElement('source');
-			if (!!audioplayer.canPlayType('audio/mpeg') || audioplayer.canPlayType('audio/mpeg') === "maybe") {
-			    source.type = 'audio/mpeg';
-			    source.src = mp3;
-			} else if (!!audioplayer.canPlayType('audio/mp4') || audioplayer.canPlayType('audio/mp4') === "maybe") {
-				source.type = 'audio/mp4';
-				source.src = m4a;
-			}else {
-			    source.type= 'audio/ogg';
-			    source.src = ogg;
-			} 
+			
+			if(!!file){
+				var ogg = "audio/" + file + ".ogg";
+				var mp3 = "audio/" + file + ".mp3";
+				var m4a = "audio/" + file + ".m4a";
+				var title = maps.songs[e.target.parentNode.id].title;
+				var source= document.createElement('source');
+				if (!!audioplayer.canPlayType('audio/mpeg') || audioplayer.canPlayType('audio/mpeg') === "maybe") {
+				    source.type = 'audio/mpeg';
+				    source.src = mp3;
+				} else if (!!audioplayer.canPlayType('audio/mp4') || audioplayer.canPlayType('audio/mp4') === "maybe") {
+					source.type = 'audio/mp4';
+					source.src = m4a;
+				}else {
+				    source.type= 'audio/ogg';
+				    source.src = ogg;
+				} 
 
-			var playerSource = !!audioplayer.firstChild && !!audioplayer.firstChild.src ? audioplayer.firstChild.src.substring(audioplayer.firstChild.src.lastIndexOf('/')) : "";
-			var isPreviousSource = playerSource === source.src.substring(source.src.lastIndexOf('/'));
+				var playerSource = !!audioplayer.firstChild && !!audioplayer.firstChild.src ? audioplayer.firstChild.src.substring(audioplayer.firstChild.src.lastIndexOf('/')) : "";
+				var isPreviousSource = playerSource === source.src.substring(source.src.lastIndexOf('/'));
 
-			if (audioplayer.paused && !isPreviousSource) {
-				console.log("1")
-				if(title !== document.getElementById("song-title").innerHTML){
-			    	document.getElementById("song-title").innerHTML = title;
+				if (audioplayer.paused && !isPreviousSource) {				
+					if(title !== document.getElementById("song-title").innerHTML){
+				    	document.getElementById("song-title").innerHTML = title;
+				    }
+
+					// clear out source from audioplayer
+					while (audioplayer.firstChild) {
+					    audioplayer.removeChild(audioplayer.firstChild);
+					}
+					
+					audioplayer.appendChild(source);
+					audioplayer.load();		
+					audioplayer.play();
+					$(this).addClass("hot");
+			   
+			    } 
+			    else if (audioplayer.paused && isPreviousSource) {
+					audioplayer.play();
+					$(this).addClass("hot");		   
+			    } 
+			    else if(!audioplayer.paused && isPreviousSource){
+					audioplayer.pause();
+					$(this).removeClass("hot");
+
+			    } 
+			    else if(!audioplayer.paused && !isPreviousSource) {
+			    	$(".hot").removeClass("hot");
+
+			    	if(title !== document.getElementById("song-title").innerHTML){
+				    	document.getElementById("song-title").innerHTML = title;
+				    }
+			    	// clear out source from audioplayer
+					while (audioplayer.firstChild) {
+					    audioplayer.removeChild(audioplayer.firstChild);
+					}
+					
+			    	audioplayer.appendChild(source);
+					audioplayer.load();
+					audioplayer.play();
+					$(this).addClass("hot");
 			    }
-
-				// clear out source from audioplayer
-				while (audioplayer.firstChild) {
-				    audioplayer.removeChild(audioplayer.firstChild);
-				}
-				
-				audioplayer.appendChild(source);
-				audioplayer.load();		
-				audioplayer.play();
-		   
-		    } 
-		    else if (audioplayer.paused && isPreviousSource) {
-		    	console.log("2")
-				audioplayer.play();		   
-		    } 
-		    else if(!audioplayer.paused && isPreviousSource){
-		    	console.log("3")
-				audioplayer.pause();
-		    } 
-		    else if(!audioplayer.paused && !isPreviousSource) {
-		    	console.log("4")
-		    	if(title !== document.getElementById("song-title").innerHTML){
-			    	document.getElementById("song-title").innerHTML = title;
-			    }
-		    	// clear out source from audioplayer
-				while (audioplayer.firstChild) {
-				    audioplayer.removeChild(audioplayer.firstChild);
-				}
-				
-		    	audioplayer.appendChild(source);
-				audioplayer.load();
-				audioplayer.play();
+			    $(this).toggleClass('pause');
 		    }
-		    $(this).toggleClass('pause');
-	    }
+		}
 	};
 	
 	

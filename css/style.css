@@ -41,7 +41,8 @@ body {
 
 a {
   color: white;
-  text-decoration: none; }
+  text-decoration: none; 
+}
 
 a, a img, a span, input[type="submit"] {
   -webkit-transition: all 0.2s ease-out;
@@ -405,9 +406,12 @@ main section.media audio {
 	cursor: not-allowed;
 }
 
-
 .buttons_wrap .button.inactive:hover {
 	opacity: .3;
+}
+
+.buttons_wrap .button.hot {
+	opacity: 1;
 }
 
 .buttons_wrap .button .icon {
@@ -530,6 +534,7 @@ footer p {
 
 footer a {
 	color: rgb(30, 30, 30); 
+	text-decoration: underline;
 }
 
 /* Global Classes */
