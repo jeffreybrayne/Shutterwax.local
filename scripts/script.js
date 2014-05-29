@@ -19,81 +19,97 @@ maps.songs = {
 
 (function($){
 	
-	
 	$.fn.startup = function(){
 
 		$(".button").each(function(){
 			$(this).click($.fn.playAudio);
 		});
 
+		$(".link a").each(function(){
+			$(this).click($.fn.setHotLink);
+		});
+
+		if($.browser.mobile){ 
+			$("#desktop-nav").addClass("noDisplay");
+		}
+	};
+
+
+	$.fn.setHotLink = function(){
+		$(".link a").removeClass("hot");
+		$(this).addClass("hot");
 	};
 	
 	$.fn.playAudio = function(e){
-
-		var audioplayer = document.getElementById("audioplayer");
-		var file = maps.songs[e.target.parentNode.id].file;
-		var title = maps.songs[e.target.parentNode.id].title;
-		
-		if(!!file){
-			var ogg = "audio/" + file + ".ogg";
-			var mp3 = "audio/" + file + ".mp3";
-			var m4a = "audio/" + file + ".m4a";
+		if(!$(this).hasClass("inactive")){
+			var audioplayer = document.getElementById("audioplayer");
+			var file = maps.songs[e.target.parentNode.id].file;
 			var title = maps.songs[e.target.parentNode.id].title;
-			var source= document.createElement('source');
-			if (!!audioplayer.canPlayType('audio/mpeg') || audioplayer.canPlayType('audio/mpeg') === "maybe") {
-			    source.type = 'audio/mpeg';
-			    source.src = mp3;
-			} else if (!!audioplayer.canPlayType('audio/mp4') || audioplayer.canPlayType('audio/mp4') === "maybe") {
-				source.type = 'audio/mp4';
-				source.src = m4a;
-			}else {
-			    source.type= 'audio/ogg';
-			    source.src = ogg;
-			} 
+			
+			if(!!file){
+				var ogg = "audio/" + file + ".ogg";
+				var mp3 = "audio/" + file + ".mp3";
+				var m4a = "audio/" + file + ".m4a";
+				var title = maps.songs[e.target.parentNode.id].title;
+				var source= document.createElement('source');
+				if (!!audioplayer.canPlayType('audio/mpeg') || audioplayer.canPlayType('audio/mpeg') === "maybe") {
+				    source.type = 'audio/mpeg';
+				    source.src = mp3;
+				} else if (!!audioplayer.canPlayType('audio/mp4') || audioplayer.canPlayType('audio/mp4') === "maybe") {
+					source.type = 'audio/mp4';
+					source.src = m4a;
+				}else {
+				    source.type= 'audio/ogg';
+				    source.src = ogg;
+				} 
 
-			var playerSource = !!audioplayer.firstChild && !!audioplayer.firstChild.src ? audioplayer.firstChild.src.substring(audioplayer.firstChild.src.lastIndexOf('/')) : "";
-			var isPreviousSource = playerSource === source.src.substring(source.src.lastIndexOf('/'));
+				var playerSource = !!audioplayer.firstChild && !!audioplayer.firstChild.src ? audioplayer.firstChild.src.substring(audioplayer.firstChild.src.lastIndexOf('/')) : "";
+				var isPreviousSource = playerSource === source.src.substring(source.src.lastIndexOf('/'));
 
-			if (audioplayer.paused && !isPreviousSource) {
-				console.log("1")
-				if(title !== document.getElementById("song-title").innerHTML){
-			    	document.getElementById("song-title").innerHTML = title;
+				if (audioplayer.paused && !isPreviousSource) {				
+					if(title !== document.getElementById("song-title").innerHTML){
+				    	document.getElementById("song-title").innerHTML = title;
+				    }
+
+					// clear out source from audioplayer
+					while (audioplayer.firstChild) {
+					    audioplayer.removeChild(audioplayer.firstChild);
+					}
+					
+					audioplayer.appendChild(source);
+					audioplayer.load();		
+					audioplayer.play();
+					$(this).addClass("hot");
+			   
+			    } 
+			    else if (audioplayer.paused && isPreviousSource) {
+					audioplayer.play();
+					$(this).addClass("hot");		   
+			    } 
+			    else if(!audioplayer.paused && isPreviousSource){
+					audioplayer.pause();
+					$(this).removeClass("hot");
+
+			    } 
+			    else if(!audioplayer.paused && !isPreviousSource) {
+			    	$(".hot").removeClass("hot");
+
+			    	if(title !== document.getElementById("song-title").innerHTML){
+				    	document.getElementById("song-title").innerHTML = title;
+				    }
+			    	// clear out source from audioplayer
+					while (audioplayer.firstChild) {
+					    audioplayer.removeChild(audioplayer.firstChild);
+					}
+					
+			    	audioplayer.appendChild(source);
+					audioplayer.load();
+					audioplayer.play();
+					$(this).addClass("hot");
 			    }
-
-				// clear out source from audioplayer
-				while (audioplayer.firstChild) {
-				    audioplayer.removeChild(audioplayer.firstChild);
-				}
-				
-				audioplayer.appendChild(source);
-				audioplayer.load();		
-				audioplayer.play();
-		   
-		    } 
-		    else if (audioplayer.paused && isPreviousSource) {
-		    	console.log("2")
-				audioplayer.play();		   
-		    } 
-		    else if(!audioplayer.paused && isPreviousSource){
-		    	console.log("3")
-				audioplayer.pause();
-		    } 
-		    else if(!audioplayer.paused && !isPreviousSource) {
-		    	console.log("4")
-		    	if(title !== document.getElementById("song-title").innerHTML){
-			    	document.getElementById("song-title").innerHTML = title;
-			    }
-		    	// clear out source from audioplayer
-				while (audioplayer.firstChild) {
-				    audioplayer.removeChild(audioplayer.firstChild);
-				}
-				
-		    	audioplayer.appendChild(source);
-				audioplayer.load();
-				audioplayer.play();
+			    $(this).toggleClass('pause');
 		    }
-		    $(this).toggleClass('pause');
-	    }
+		}
 	};
 	
 	
@@ -142,52 +158,17 @@ jQuery(window).scroll(function() {
 // Smooth Scrolling by Chris Coyier - More info here: http://css-tricks.com/snippets/jquery/smooth-scrolling
 // Performs a smooth page scroll to an anchor on the same page
 
-/*
-function filterPath(string) {
-	return string
-	.replace(/^\//,'')
-	.replace(/(index|default).[a-zA-Z]{3,4}$/,'')
-	.replace(/\/$/,'');
-}
-var locationPath = filterPath(location.pathname);
-var scrollElem = scrollableElement('html', 'body');
-
-$('a[href*=#]').each(function() {
-	var thisPath = filterPath(this.pathname) || locationPath;
-	if (  locationPath == thisPath
-	&& (location.hostname == this.hostname || !this.hostname)
-	&& this.hash.replace(/#/,'') ) {
-		var $target = $(this.hash), target = this.hash;
-		if (target) {
-			var targetOffset = $target.offset().top;
-			$(this).click(function(event) {
-				event.preventDefault();
-				$(scrollElem).animate({scrollTop: targetOffset}, 300, function() {
-					location.hash = target;
-				});
-			});
-		}
-	}
+$(function() {
+  $('a[href*=#]:not([href=#])').click(function() {
+    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+      if (target.length) {
+        $('html,body').animate({
+          scrollTop: target.offset().top
+        }, 1000);
+        return false;
+      }
+    }
+  });
 });
-*/
-
-// use the first element that is "scrollable"
-/*
-function scrollableElement(els) {
-	for (var i = 0, argLength = arguments.length; i <argLength; i++) {
-		var el = arguments[i],
-		$scrollElement = $(el);
-		if ($scrollElement.scrollTop()> 0) {
-			return el;
-		} else {
-			$scrollElement.scrollTop(1);
-			var isScrollable = $scrollElement.scrollTop()> 0;
-			$scrollElement.scrollTop(0);
-			if (isScrollable) {
-				return el;
-			}
-		}
-	}
-	return [];
-}
-*/
