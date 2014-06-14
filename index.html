@@ -4,6 +4,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	
 	<title>Shutterwax | 2014 ::: DIG ME A WELL :: The Official Site : Jeffrey Brayne : Mark Rufino : Jessica Brayne : Harvey Brice : Frank Diorio</title>
 	
@@ -33,7 +34,20 @@
 </head>
 
 <body>
-	<a name="top"></a>
+
+	<div class="modal-wrapper noDisplay" id="presskit">
+		<div class="modal">
+			<span id="close"><i class="fa fa-chevron-circle-down fa-2x"></i></span>
+			<h1>Press/Media Kit</h1>
+			<h2>Downloads</h2>
+			<p>Pre-release Album Tracks: <a href="http://shutterwax.com/Shutterwax-Dig_Me_a_Well-m4a.zip"><i class="fa fa-download"></i>Dig Me a Well - m4a</a></p>
+			<h2>Artwork</h2>
+			<p>Coming...</p>
+			<h2>Contact</h2>
+			<p>Jeffrey Brayne: <span class="email">jeff [at] shutterwax.com</span> ~or~ (732) 539-3927</p>
+		</div>
+	</div>
+
 	<header role="banner" class="top_bar row" style="top: 0px;">
 		<div id="social">
 			<a class="icon" href="http://twitter.com/shutterwax" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
@@ -44,11 +58,11 @@
 		</div>
 		<nav id="desktop-nav" class="container row">
 			<ul>
-				<li class="link"><a class="hot" href="#top">Top</a></li>
-				<li class="link"><a href="#artifacts">Artifacts</a></li>
+				<li class="link"><a href="#audio">Artifacts</a></li>
 				<li class="link"><a href="#frames">Frames</a></li>
 				<li class="link"><a href="#history">History</a></li>
-				<li class="link last"><a href="#contact">Contact</a></li>
+				<li class="link"><a href="#contact">Contact</a></li>
+				<li class="link last"><a id="press">Media Kit</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -75,7 +89,6 @@
 			<h2 id="download-link"><a id="download" class="text_link" href="http://noisetrade.com/shutterwax" target="_blank"><i class="fa fa-download fa-2x"></i>Dig Me a Well</a></h2>
 			
 		</div>
-		<a name="artifacts"></a>
 		<aside role="media" class="row section" id="audio">	
 			<h2>Artifacts</h2>
 			<section role="audio" class="buttons_wrap gutter">
@@ -89,35 +102,35 @@
 					<span class="icon icon_dig-me-a-well"></span>
 				</a>
 				
-				<a id="fly-away" class="button inactive" title="I'll Fly Away">
+				<a id="fly-away" class="button" title="I'll Fly Away">
 					<span class="icon icon_fly-away"></span>
 				</a>
 				
-				<a id="american-dream" class="button inactive" title="American Dream">
+				<a id="american-dream" class="button" title="American Dream">
 					<span class="icon icon_american-dream"></span>
 				</a>
 				
-				<a id="love-beyone-your-means" class="button inactive" title="Love Beyond Your Means">
+				<a id="love-beyond-your-means" class="button" title="Love Beyond Your Means">
 					<span class="icon icon_love-beyond-your-means"></span>
 				</a>
 				
-				<a id="mask" class="button inactive" title="Mask">
+				<a id="mask" class="button" title="Mask">
 					<span class="icon icon_mask"></span>
 				</a>
 				
-				<a id="willowman" class="button inactive" title="Willowman">
+				<a id="willowman" class="button" title="Willowman">
 					<span class="icon icon_willowman"></span>
 				</a>
 				
-				<a id="silence-me" class="button inactive" title="Silence Me">
+				<a id="silence-me" class="button" title="Silence Me">
 					<span class="icon icon_silence-me"></span>
 				</a>
 				
-				<a id="some-girls" class="button inactive" title="Some Girls">
+				<a id="some-girls" class="button" title="Some Girls">
 					<span class="icon icon_some-girls"></span>
 				</a>
 				
-				<a id="yellow-magazine" class="button inactive" title="Yellow Magazine">
+				<a id="yellow-magazine" class="button" title="Yellow Magazine">
 					<span class="icon icon_yellow-magazine"></span>
 				</a>
 				<div id="song-title-wrapper">
@@ -128,18 +141,29 @@
 					<source src="audio/Shutterwax-Apocalypse_Please_Be_True.mp3" type="audio/mpeg">
 					<source src="audio/Shutterwax-Apocalypse_Please_Be_True.ogg" type="audio/ogg">
 				</audio>
+				<div id="credits">
+					<p>
+						<span class="credit" id="vocals"></span>
+						<span class="credit" id="backingVocals"></span>
+						<span class="credit" id="guitars"></span>
+						<span class="credit" id="bass"></span>
+						<span class="credit" id="drums"></span>
+						<span class="credit" id="piano"></span>
+						<span class="credit" id="keyboards"></span>
+						<span class="credit" id="ukulele"></span>
+						<span class="credit" id="bagpipes"></span>
+					</p>
+				</div>
 			</section>
 
 		</aside>
 		
-		<a name="frames"></a>
-		<aside>
+		<aside id="frames">
 			<h2>Frames</h2>
 			<iframe id="promo-video" src="//www.youtube.com/embed/nd14YRGvaEc" frameborder="0" allowfullscreen></iframe>
 		</aside>
 
-		<a name="history"></a>
-		<aside>
+		<aside id="history">
 			<h2>History</h2>
 			<section class="container">
 				<p>Shutterwax is known for its quirky, pop-driven artistic music deriving its sound from the influences of legendary bands such as XTC, America, REM, Sloan, Elvis Costello and of course The Beatles. They share the sonic diversity of Sloan, the unique sensibilities of Burt Bacharach, the heaviness of Soundgarden and the pop wizardry of Elvis Costello. With a sound that's ever evolving, they strive to produce music that is true to their current mindsets and interests.</p>
@@ -152,16 +176,29 @@
 				<p>Eventually Jeff and Mark met Bournemouth, UK native Harvey Brice (guitars/vocals) to support The Harveymoon as its rhythm section; a Brit-pop alternative act with which they self-released two albums. </p>
 				<p>Jeff, Mark and Harvey begun collaborating on music hence morphing into a more formal Shutterwax. Leveraging Harvey's Brit-pop sensibilities, they weaved their darker-spirited approach into Harvey's inspiration forging Shutterwax's unique sound and classic sound.</p>
 				<p>The final addition to the Shutterwax lineup was veteran NJ musician and actress Jessica Zeus (keyboards/vocals) adding a beautiful juxtaposition of influences that shape the multidimensional and dynamic sound that is Shutterwax.</p>
-				<p>Shutterwax has just recently finished a stint in the studio over the summer of 2013. They are currently mixing and compiling the tracks for a new album. Their next release is slated for Fall 2013!</p>		
+				<p>Shutterwax will be releasing a new album in the summer of 2014 entitled Dig Me a Well!</p>		
 			</section>
 			
 		</aside>
+
+		<aside id="contact">
+			<h2>Contact</h2>
+			<section class="container">
+				<ul class="link-list">
+				<li><span class="email">jeff [at] shutterwax.com</span></li>
+				<li><a class="icon" href="http://twitter.com/shutterwax" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+				<a class="icon" href="http://youtube.com/shutterwax" target="_blank"><i class="fa fa-youtube fa-2x"></i></a>
+				<a class="icon" href="http://facebook.com/shutterwax" target="_blank"><i class="fa fa-facebook fa-2x"></i></a>
+				<a class="icon" href="http://instagram.com/shutterwax" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
+				<a class="icon" href="http://soundcloud.com/shutterwax" target="_blank"><i class="fa fa-soundcloud fa-2x"></i></a></li>
+				</ul>
+				<p>Shutterwax is based in Kittery, ME. Come visit and have some lobster. Listen to music.</p>
+			</section>
+		</aside>
+
 	</main>
 	
-	<a name="contact"></a>
 	<footer role="contentinfo" class="container">
-		<h1>Contact</h1>
-		<p>Email: jeff@ (not a typo, use the domain) | Twitter: @shutterwax</p>
 		<h1>Site Info</h1>
 		<p>All Site Content &#169;2014 Shutterwax. Site design and development by <a href="http://jeffreybrayne.com" target="_blank">Jeffrey Brayne</a></p>
 	

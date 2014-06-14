@@ -2,17 +2,114 @@ var maps = {};
 maps.songs = {
 	"apocalypse": {
 		"file": "Shutterwax-Apocalypse_Please_Be_True",
-		"title": "Apocalypse, Please Be True"
-
+		"title": "Apocalypse, Please Be True",
+		"credits": {
+			"vocals":"Harvey Brice",
+			"backingVocals":"Jessica Brayne",
+			"guitars":"Jeffrey Brayne",
+			"bass":"Mark Rufino",
+			"drums":"Frank Diorio",
+			"piano":"Zach Onett"
+		}
 	},	
 	"mask": {
 		"file": "Shutterwax-Mask",
-		"title": "Mask"
-		
+		"title": "Mask",
+		"credits": {
+			"vocals":"Harvey Brice",
+			"backingVocals":"Jessica Brayne",
+			"guitars":"Jeffrey Brayne",
+			"bass":"Mark Rufino",
+			"drums":"Frank Diorio"
+		}		
 	}, 	
 	"dig-me-a-well": {
 		"file": "Shutterwax-Dig_Me_a_Well",
-		"title": "Dig Me a Well"
+		"title": "Dig Me a Well",
+		"credits": {
+			"vocals":"Harvey Brice",
+			"backingVocals":"Jessica Brayne",
+			"guitars":"Jeffrey Brayne, Harvey Brice",
+			"bass":"Mark Rufino",
+			"drums":"Frank Diorio",
+			"melodica":"Harvey Brice"
+		}
+	},
+	"silence-me": {
+		"file": "Shutterwax-Silence_Me",
+		"title": "Silence Me",
+		"credits": {
+			"vocals":"Jeffrey Brayne",
+			"guitars":"Jeffrey Brayne",
+			"bass":"Mark Rufino",
+			"drums":"Frank Diorio"
+		}
+	},
+	"yellow-magazine": {
+		"file": "Shutterwax-Yellow_Magazine",
+		"title": "Yellow Magazine",
+		"credits": {
+			"vocals":"Mark Rufino, Jeffrey Brayne",
+			"guitars":"Jeffrey Brayne",
+			"bass":"Mark Rufino",
+			"drums":"Frank Diorio",
+			"keyboards":"Mark Rufino"
+		}
+	},
+	"love-beyond-your-means": {
+		"file": "Shutterwax-Love_Beyond_Your_Means",
+		"title": "Love Beyond Your Means",
+		"credits": {
+			"vocals":"Jeffrey Brayne, Andrew Brayne, Gavin Brayne",
+			"backingVocals":"Jessica Brayne, Harvey Brice, Mark Rufino",
+			"guitars":"Jeffrey Brayne",
+			"ukulele":"Jeffrey Brayne",
+			"bass":"Mark Rufino",
+			"keyboards":"Mark Rufino",
+			"drums":"Frank Diorio"
+		}
+	},
+	"fly-away": {
+		"file": "Shutterwax-Fly_Away",
+		"title": "Fly Away",
+		"credits": {
+			"vocals":"Jessica Brayne",
+			"guitars":"Jeffrey Brayne, Harvey Brice",
+			"bass":"Mark Rufino",
+			"drums":"Frank Diorio"
+		}
+	},
+	"some-girls": {
+		"file": "Shutterwax-Some_Girls",
+		"title": "Some Girls",
+		"credits": {
+			"vocals":"Jeffrey Brayne",
+			"guitars":"Jeffrey Brayne",
+			"bass":"Mark Rufino",
+			"drums":"Frank Diorio"
+		}
+	},
+	"willowman": {
+		"file": "Shutterwax-Willowman",
+		"title": "Willowman",
+		"credits": {
+			"vocals":"Jeffrey Brayne",
+			"guitars":"Jeffrey Brayne",
+			"bass":"Mark Rufino",
+			"drums":"John Rogers"
+		}
+	},
+	"american-dream": {
+		"file": "Shutterwax-American_Dream",
+		"title": "American Dream",
+		"credits": {
+			"vocals":"Jeffrey Brayne",
+			"backingVocals":"Harvey Brice, Jeffrey Brayne, Mark Rufino, Jessica Brayne, Travis Taylor",
+			"guitars":"Harvey Brice, Jeffrey Brayne",
+			"bass":"Mark Rufino",
+			"drums":"Bob Wilson",
+			"bagpipes":"Travis Taylor, Jeffrey Brayne"
+		}
 	}
 };
 
@@ -29,15 +126,33 @@ maps.songs = {
 			$(this).click($.fn.setHotLink);
 		});
 
+		$("#close").click(function(){
+			$(".modal-wrapper").addClass("noDisplay");
+		});
+
 		if($.browser.mobile){ 
 			$("#desktop-nav").addClass("noDisplay");
 		}
+
+		$.fn.setCredits(maps.songs["apocalypse"].credits);
+
+		$("body").emailSpamProtection("email");
 	};
 
 
 	$.fn.setHotLink = function(){
 		$(".link a").removeClass("hot");
 		$(this).addClass("hot");
+		if($(this)[0].id === "press"){
+			$("#presskit").removeClass("noDisplay");
+		}
+	};
+
+	$.fn.setCredits = function(credits){
+		$(".credit").html("");
+		for(var credit in credits){
+			$("#" + credit).html("<span class='creditTitle'>" + credit + "</span>: " + credits[credit]);
+		}
 	};
 	
 	$.fn.playAudio = function(e){
@@ -51,6 +166,7 @@ maps.songs = {
 				var mp3 = "audio/" + file + ".mp3";
 				var m4a = "audio/" + file + ".m4a";
 				var title = maps.songs[e.target.parentNode.id].title;
+				var credits = maps.songs[e.target.parentNode.id].credits;
 				var source= document.createElement('source');
 				if (!!audioplayer.canPlayType('audio/mpeg') || audioplayer.canPlayType('audio/mpeg') === "maybe") {
 				    source.type = 'audio/mpeg';
@@ -69,6 +185,7 @@ maps.songs = {
 				if (audioplayer.paused && !isPreviousSource) {				
 					if(title !== document.getElementById("song-title").innerHTML){
 				    	document.getElementById("song-title").innerHTML = title;
+				    	$.fn.setCredits(credits);
 				    }
 
 					// clear out source from audioplayer
@@ -96,6 +213,7 @@ maps.songs = {
 
 			    	if(title !== document.getElementById("song-title").innerHTML){
 				    	document.getElementById("song-title").innerHTML = title;
+				    	$.fn.setCredits(credits);
 				    }
 			    	// clear out source from audioplayer
 					while (audioplayer.firstChild) {
@@ -158,17 +276,39 @@ jQuery(window).scroll(function() {
 // Smooth Scrolling by Chris Coyier - More info here: http://css-tricks.com/snippets/jquery/smooth-scrolling
 // Performs a smooth page scroll to an anchor on the same page
 
-$(function() {
-  $('a[href*=#]:not([href=#])').click(function() {
-    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-      var target = $(this.hash);
-      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-      if (target.length) {
-        $('html,body').animate({
-          scrollTop: target.offset().top
-        }, 1000);
-        return false;
-      }
+$('a[href*=#]:not([href=#])').click(function() {
+    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') 
+        || location.hostname == this.hostname) {
+
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+           if (target.length) {
+             $('html,body').animate({
+                 scrollTop: target.offset().top
+            }, 1000);
+            return false;
+        }
     }
-  });
 });
+
+/* 
+ * EmailSpamProtection (jQuery Plugin)
+ * Version: 1.0
+ * Date: 2010 July
+ * Author: Mike Unckel
+ * Description and Demo: http://unckel.de/labs/jquery-plugin-email-spam-protection
+ *
+ * HTML: <span class="email">info [at] domain.com</span>
+ * JavaScript: $("body").emailSpamProtection("email");
+ *
+ */
+
+(function($) {
+	$.fn.emailSpamProtection = function(className) {
+		return $(this).find("." + className).each(function() {
+			var $this = $(this);
+			var s = $this.text().replace(" [at] ", "&#64;");
+			$this.html("<a href=\"mailto:" + s + "\">" + s + "</a>");
+		});
+	};
+})(jQuery);
